@@ -36,8 +36,6 @@ function mostrarAlumnos(alumnos) {
     });
 }
 
-
-
 addNewStudentBtn.addEventListener('click', () => {
     mainView.classList.add('d-none');
     formView.classList.remove('d-none');
@@ -54,8 +52,65 @@ studentForm.addEventListener('submit', async (e) => {
     const formData = new FormData(studentForm);
     const alumno = Object.fromEntries(formData.entries());
 
-    console.log("Nuevo estudiante a guardar:", alumno);
+    try {
+        await guardarAlumno(alumno);
+        alert('Alumno guardado correctamente');
 
-    studentForm.reset();
-    volverBtn.click();
+        // Limpiar formulario y volver
+        studentForm.reset();
+        volverBtn.click();
+        const alumnos = await obtenerAlumnos();
+        mostrarAlumnos(alumnos);
+    } catch (error) {
+        console.error(error);
+        alert('Error al guardar el alumno');
+    }
+});
+
+function mostrarFormulario() {
+    mainView.classList.add('d-none');
+    formView.classList.remove('d-none');
+    setTimeout(() => formView.classList.add('fade-in'), 10);
+}
+
+function ocultarFormulario() {
+    formView.classList.remove('fade-in');
+    setTimeout(() => {
+        formView.classList.add('d-none');
+        mainView.classList.remove('d-none');
+        setTimeout(() => mainView.classList.add('fade-in'), 10);
+    }, 300);
+}
+
+addNewStudentBtn.addEventListener('click', mostrarFormulario);
+volverBtn.addEventListener('click', ocultarFormulario);
+
+
+formulario.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nuevoAlumno = {
+        codigo: form.codigo.value,
+        nombre: form.nombre.value,
+        email: form.email.value,
+        telefono: form.telefono.value,
+        nacimiento: form.nacimiento.value,
+        direccion: form.direccion.value,
+        foto: form.foto.value,
+        github: form.github.value
+    };
+
+    if (await alumnoExiste(nuevoAlumno.codigo)) {
+        alert('Ya existe un alumno con ese código');
+        return;
+    }
+
+    try {
+        await guardarAlumno(nuevoAlumno);
+        alert('Alumno guardado con éxito');
+        mostrarVistaPrincipal(); // volver a la lista
+    } catch (err) {
+        console.error(err);
+        alert('Error al guardar el alumno');
+    }
 });
