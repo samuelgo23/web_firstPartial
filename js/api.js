@@ -29,7 +29,6 @@ async function guardarAlumno(alumno) {
         throw new Error('Error al guardar el alumno');
     }
 
-    // Solo intentar convertir en JSON si hay contenido
     const text = await res.text();
     return text ? JSON.parse(text) : null;
 }

@@ -10,18 +10,17 @@
 <body>
     <nav class="navbar navbar-dark bg-primary">
         <div class="container d-flex justify-content-between align-items-center">
-            <span class="navbar-brand mb-0 h1">Sistema de Matriculas</span>
+            <span class="navbar-brand mb-0 display-5 text-white">Sistema de Matrículas</span>
             <div>
                 <button class="btn btn-light me-2" id="studentsBtn">Estudiantes</button>
                 <button class="btn btn-light" id="subjectsBtn">Asignaturas</button>
             </div>
         </div>
     </nav>
-
-    
-
     <div class="container mt-5" id="mainView">
+        
         <div class="d-flex justify-content-between align-items-center mb-4">
+            
             <h2 class="text-primary m-0">Estudiantes</h2>
             <button class="btn btn-light d-flex align-items-center" id="addNewStudent">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -31,17 +30,14 @@
                 Nuevo Estudiante
             </button>
         </div>
-    
         <div class="grid-container" id="studentsList"></div>
     </div>
     
-    <!-- Formulario para nuevo estudiante -->
     <div class="container mt-5 d-none" id="formView">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary m-0">Guardar Nuevo Estudiante</h2>
             <button class="btn btn-secondary" id="volverBtn">Volver</button>
         </div>
-    
         <form id="studentForm">
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -73,7 +69,6 @@
                     <input type="text" class="form-control" name="direccion">
                 </div>
             </div>
-    
             <button type="submit" class="btn btn-success">Guardar</button>
         </form>
     </div>
@@ -81,43 +76,53 @@
     <div class="container mt-5 d-none" id="profileView">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary m-0">Perfil del Estudiante</h2>
-            <button class="btn btn-secondary" id="volverDesdePerfil">Volver</button>
+            <button class="btn btn-secondary" id="volverAlListado">Volver</button>
+        </div>
+        <div class="card mb-4 p-4 text-dark bg-light">
+            <div class="d-flex align-items-center mb-3">
+                <img id="perfilFoto" src="" alt="Foto" class="me-3" style="width: 80px; height: 80px; border-radius: 50%;">
+                <h4 id="perfilNombre" class="m-0"></h4>
+            </div>
+            <p><strong>Código:</strong> <span id="perfilCodigo"></span></p>
+            <p><strong>Email:</strong> <span id="perfilEmail"></span></p>
+            <p><strong>Teléfono:</strong> <span id="perfilTelefono"></span></p>
+            <p><strong>Fecha de nacimiento:</strong> <span id="perfilNacimiento"></span></p>
+            <p><strong>Dirección:</strong> <span id="perfilDireccion"></span></p>
         </div>
     
-        <div class="card p-4 bg-light text-dark">
-            <div class="text-center mb-3">
-                <img id="perfilFoto" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;" />
-            </div>
-            <h4 class="text-center" id="perfilNombre"></h4>
-            <p class="text-center text-muted" id="perfilCodigo"></p>
+        <h5 class="text-white">Asignaturas</h5>
+        <ul class="list-group mb-3" id="listaAsignaturas"></ul>
     
-            <div class="mt-4">
-                <p><strong>Email:</strong> <span id="perfilEmail"></span></p>
-                <p><strong>Teléfono:</strong> <span id="perfilTelefono"></span></p>
-                <p><strong>Fecha de Nacimiento:</strong> <span id="perfilNacimiento"></span></p>
-                <p><strong>Dirección:</strong> <span id="perfilDireccion"></span></p>
-                <p><strong>GitHub:</strong> <a href="#" target="_blank" id="perfilGithub"></a></p>
-            </div>
+        <div class="card p-3">
+            <h6>Agregar nueva asignatura</h6>
+            <form id="formAgregarAsignatura" class="row g-2 align-items-end">
+                <div class="col-md-8">
+                    <select class="form-select" id="selectAsignatura" required></select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">Agregar Asignatura</button>
+                </div>
+            </form>
         </div>
     </div>
-
+    
     <template id="studentCardTemplate">
         <div class="student-card text-start">
-          <div class="d-flex align-items-center mb-2">
-            <img src="" class="student-thumb me-3" alt="Foto">
-            <div>
-              <h5 class="student-name mb-0"></h5>
-              <small class="text-muted student-id"></small>
+            <div class="d-flex align-items-center mb-2">
+                <img src="" class="student-thumb me-3" alt="Foto">
+                <div>
+                    <h5 class="student-name mb-0"></h5>
+                    <small class="text-muted student-id"></small>
+                </div>
             </div>
-          </div>
-          <p class="mb-1 student-email"></p>
-          <p class="mb-2 student-phone"></p>
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-sm btn-outline-warning">Editar</button>
-            <button class="btn btn-sm btn-outline-info">Ver Perfil</button>
-          </div>
+            <p class="mb-1 student-email"></p>
+            <p class="mb-2 student-phone"></p>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-warning">Editar</button>
+                <button class="btn btn-sm btn-outline-info btn-ver-perfil">Ver Perfil</button>
+            </div>
         </div>
-      </template>
+    </template>
 
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
