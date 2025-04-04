@@ -24,7 +24,7 @@ function mostrarAlumnos(alumnos) {
         clone.querySelector('.student-id').textContent = `ID: ${alumno.codigo}`;
         clone.querySelector('.student-email').textContent = alumno.email;
 
-        // Verifica si hay foto válida, si no usa una por defecto
+        // Imagen por defecto si no hay foto
         const foto = alumno.foto || alumno.photo || '';
         clone.querySelector('.student-image').src = 
             foto.trim() !== '' 
@@ -36,43 +36,14 @@ function mostrarAlumnos(alumnos) {
     });
 }
 
-addNewStudentBtn.addEventListener('click', () => {
-    mainView.classList.add('d-none');
-    formView.classList.remove('d-none');
-});
-
-volverBtn.addEventListener('click', () => {
-    formView.classList.add('d-none');
-    mainView.classList.remove('d-none');
-});
-
-studentForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(studentForm);
-    const alumno = Object.fromEntries(formData.entries());
-
-    try {
-        await guardarAlumno(alumno);
-        alert('Alumno guardado correctamente');
-
-        // Limpiar formulario y volver
-        studentForm.reset();
-        volverBtn.click();
-        const alumnos = await obtenerAlumnos();
-        mostrarAlumnos(alumnos);
-    } catch (error) {
-        console.error(error);
-        alert('Error al guardar el alumno');
-    }
-});
-
+// Mostrar formulario con transición suave
 function mostrarFormulario() {
     mainView.classList.add('d-none');
     formView.classList.remove('d-none');
     setTimeout(() => formView.classList.add('fade-in'), 10);
 }
 
+// Ocultar formulario con transición suave
 function ocultarFormulario() {
     formView.classList.remove('fade-in');
     setTimeout(() => {
@@ -82,35 +53,34 @@ function ocultarFormulario() {
     }, 300);
 }
 
+// Eventos de botones
 addNewStudentBtn.addEventListener('click', mostrarFormulario);
 volverBtn.addEventListener('click', ocultarFormulario);
 
-
-formulario.addEventListener('submit', async (e) => {
+// Evento de guardado de formulario
+studentForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const nuevoAlumno = {
-        codigo: form.codigo.value,
-        nombre: form.nombre.value,
-        email: form.email.value,
-        telefono: form.telefono.value,
-        nacimiento: form.nacimiento.value,
-        direccion: form.direccion.value,
-        foto: form.foto.value,
-        github: form.github.value
-    };
+    const formData = new FormData(studentForm);
+    const alumno = Object.fromEntries(formData.entries());
 
-    if (await alumnoExiste(nuevoAlumno.codigo)) {
+    // Validar si ya existe
+    if (await alumnoExiste(alumno.codigo)) {
         alert('Ya existe un alumno con ese código');
         return;
     }
 
     try {
-        await guardarAlumno(nuevoAlumno);
-        alert('Alumno guardado con éxito');
-        mostrarVistaPrincipal(); // volver a la lista
-    } catch (err) {
-        console.error(err);
+        await guardarAlumno(alumno);
+        alert('Alumno guardado correctamente');
+
+        studentForm.reset();
+        ocultarFormulario();
+
+        const alumnos = await obtenerAlumnos();
+        mostrarAlumnos(alumnos);
+    } catch (error) {
+        console.error(error);
         alert('Error al guardar el alumno');
     }
 });
