@@ -3,6 +3,8 @@ const volverBtn = document.getElementById('volverBtn');
 const formView = document.getElementById('formView');
 const mainView = document.getElementById('mainView');
 const studentForm = document.getElementById('studentForm');
+const profileView = document.getElementById('profileView');
+const volverDesdePerfil = document.getElementById('volverDesdePerfil');
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -28,12 +30,55 @@ function mostrarAlumnos(alumnos) {
         const foto = alumno.foto?.trim() || 'https://randomuser.me/api/portraits/lego/1.jpg';
         clone.querySelector('.student-thumb').src = foto;
 
+        // Botón Editar
+        clone.querySelector('.btn-outline-warning').addEventListener('click', () => {
+            abrirFormularioEditar(alumno);
+        });
+
+        clone.querySelector('.btn-outline-info').addEventListener('click', () => {
+            mostrarPerfil(alumno);
+        });
+
         studentsList.appendChild(clone);
     });
 }
 
+function mostrarPerfil(alumno) {
+    // Ocultar otras vistas
+    mainView.classList.add('d-none');
+    formView.classList.add('d-none');
+    profileView.classList.remove('d-none');
 
-// Mostrar formulario con transición suave
+    // Llenar datos del perfil
+    perfilFoto.src = alumno.foto?.trim() || 'https://randomuser.me/api/portraits/lego/1.jpg';
+    perfilNombre.textContent = alumno.nombre;
+    perfilCodigo.textContent = `Código: ${alumno.codigo}`;
+    perfilEmail.textContent = alumno.email || '—';
+    perfilTelefono.textContent = alumno.telefono || '—';
+    perfilNacimiento.textContent = alumno.fecha_nacimiento || '—';
+    perfilDireccion.textContent = alumno.direccion || '—';
+    perfilGithub.href = alumno.github || '#';
+    perfilGithub.textContent = alumno.github || 'No disponible';
+}
+
+volverDesdePerfil.addEventListener('click', () => {
+    profileView.classList.add('d-none');
+    mainView.classList.remove('d-none');
+});
+
+function abrirFormularioEditar(alumno) {
+    mostrarFormulario();
+
+    studentForm.codigo.value = alumno.codigo;
+    studentForm.nombre.value = alumno.nombre;
+    studentForm.email.value = alumno.email || '';
+    studentForm.telefono.value = alumno.telefono || '';
+    studentForm.fecha_nacimiento.value = alumno.fecha_nacimiento || '';
+    studentForm.direccion.value = alumno.direccion || '';
+
+    studentForm.codigo.disabled = true;
+}
+
 function mostrarFormulario() {
     mainView.classList.add('d-none');
     formView.classList.remove('d-none');

@@ -78,6 +78,28 @@
         </form>
     </div>
     
+    <div class="container mt-5 d-none" id="profileView">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary m-0">Perfil del Estudiante</h2>
+            <button class="btn btn-secondary" id="volverDesdePerfil">Volver</button>
+        </div>
+    
+        <div class="card p-4 bg-light text-dark">
+            <div class="text-center mb-3">
+                <img id="perfilFoto" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;" />
+            </div>
+            <h4 class="text-center" id="perfilNombre"></h4>
+            <p class="text-center text-muted" id="perfilCodigo"></p>
+    
+            <div class="mt-4">
+                <p><strong>Email:</strong> <span id="perfilEmail"></span></p>
+                <p><strong>Teléfono:</strong> <span id="perfilTelefono"></span></p>
+                <p><strong>Fecha de Nacimiento:</strong> <span id="perfilNacimiento"></span></p>
+                <p><strong>Dirección:</strong> <span id="perfilDireccion"></span></p>
+                <p><strong>GitHub:</strong> <a href="#" target="_blank" id="perfilGithub"></a></p>
+            </div>
+        </div>
+    </div>
 
     <template id="studentCardTemplate">
         <div class="student-card text-start">
