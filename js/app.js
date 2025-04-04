@@ -21,20 +21,17 @@ function mostrarAlumnos(alumnos) {
     alumnos.forEach(alumno => {
         const clone = template.content.cloneNode(true);
         clone.querySelector('.student-name').textContent = alumno.nombre;
-        clone.querySelector('.student-id').textContent = `ID: ${alumno.codigo}`;
-        clone.querySelector('.student-email').textContent = alumno.email;
+        clone.querySelector('.student-id').textContent = `Código: ${alumno.codigo}`;
+        clone.querySelector('.student-email').textContent = `Email: ${alumno.email || '—'}`;
+        clone.querySelector('.student-phone').textContent = `Tel: ${alumno.telefono || '—'}`;
+        
+        const foto = alumno.foto?.trim() || 'https://randomuser.me/api/portraits/lego/1.jpg';
+        clone.querySelector('.student-thumb').src = foto;
 
-        // Imagen por defecto si no hay foto
-        const foto = alumno.foto || alumno.photo || '';
-        clone.querySelector('.student-image').src = 
-            foto.trim() !== '' 
-                ? foto 
-                : 'https://randomuser.me/api/portraits/lego/1.jpg';
-
-        clone.querySelector('.github-link').href = alumno.github || '#';
         studentsList.appendChild(clone);
     });
 }
+
 
 // Mostrar formulario con transición suave
 function mostrarFormulario() {

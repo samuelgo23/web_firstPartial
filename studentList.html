@@ -80,14 +80,22 @@
     
 
     <template id="studentCardTemplate">
-        <div class="student-card">
-            <img src="" class="student-image" alt="Student Photo">
-            <h2 class="student-name"></h2>
-            <p class="student-id"></p>
-            <p class="student-email"></p>
-            <a href="#" class="btn btn-link github-link">GitHub</a>
+        <div class="student-card text-start">
+          <div class="d-flex align-items-center mb-2">
+            <img src="" class="student-thumb me-3" alt="Foto">
+            <div>
+              <h5 class="student-name mb-0"></h5>
+              <small class="text-muted student-id"></small>
+            </div>
+          </div>
+          <p class="mb-1 student-email"></p>
+          <p class="mb-2 student-phone"></p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-sm btn-outline-warning">Editar</button>
+            <button class="btn btn-sm btn-outline-info">Ver Perfil</button>
+          </div>
         </div>
-    </template>
+      </template>
 
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
